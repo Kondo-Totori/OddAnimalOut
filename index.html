@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
-    <title>ODD ANIMAL OUT</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <title>Snackable</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -17,17 +16,13 @@
         overflow: hidden;
       }
 
-      #unity-container {
-        position: relative;
-        /* サイズは JS で 9:16 に設定 */
-      }
+      #unity-container { position: relative; }
 
       #unity-canvas {
         display: block;
         background: #231F20;
       }
 
-      /* ローディングバー */
       #unity-loading-bar {
         position: absolute;
         left: 50%; top: 50%;
@@ -48,15 +43,12 @@
         transition: width 0.15s;
       }
 
-      /* エラー・警告バナー */
       #unity-warning {
         position: absolute;
         left: 50%; top: 5%;
         transform: translateX(-50%);
-        background: white;
-        padding: 10px;
-        display: none;
-        z-index: 10;
+        background: white; padding: 10px;
+        display: none; z-index: 10;
       }
     </style>
   </head>
@@ -80,15 +72,11 @@
         const vh = window.innerHeight;
         let w, h;
         if (vw / vh <= ASPECT) {
-          // ウィンドウが縦長 or ちょうど 9:16 → 横幅いっぱいに合わせる
-          w = vw;
-          h = vw / ASPECT;
+          w = vw; h = vw / ASPECT;
         } else {
-          // ウィンドウが横長 → 高さいっぱいに合わせる（左右に黒帯）
-          h = vh;
-          w = vh * ASPECT;
+          h = vh; w = vh * ASPECT;
         }
-        const c = document.getElementById('unity-container');
+        const c  = document.getElementById('unity-container');
         const cv = document.getElementById('unity-canvas');
         c.style.width  = cv.style.width  = Math.round(w) + 'px';
         c.style.height = cv.style.height = Math.round(h) + 'px';
@@ -97,7 +85,6 @@
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
 
-      // ── エラーバナー ────────────────────────────────────────────────────
       function unityShowBanner(msg, type) {
         var banner = document.querySelector('#unity-warning');
         var div = document.createElement('div');
@@ -114,7 +101,6 @@
         }
       }
 
-      // ── Unity ローダー起動 ──────────────────────────────────────────────
       var buildUrl = 'Build';
       var config = {
         arguments: [],
@@ -123,7 +109,7 @@
         codeUrl:            buildUrl + '/docs.wasm',
         streamingAssetsUrl: 'StreamingAssets',
         companyName:        'DefaultCompany',
-        productName:        'ODD ANIMAL OUT',
+        productName:        'Snackable',
         productVersion:     '0.1.0',
         showBanner:         unityShowBanner,
       };
@@ -140,11 +126,9 @@
             document.querySelector('#unity-progress-bar-full').style.width =
               (100 * progress) + '%';
           }
-        ).then(function(unityInstance) {
+        ).then(function() {
           document.querySelector('#unity-loading-bar').style.display = 'none';
-        }).catch(function(msg) {
-          alert(msg);
-        });
+        }).catch(function(msg) { alert(msg); });
       };
       document.body.appendChild(script);
     </script>
